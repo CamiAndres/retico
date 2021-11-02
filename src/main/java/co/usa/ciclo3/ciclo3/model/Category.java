@@ -6,14 +6,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Entity
 @Table(name="category")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String description;
+    
+    
+    
+    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "category")
+    @JsonIgnoreProperties({"category","message"})//NUEVO MESSAGE
+    private List<Audience> audiences;
 
     public String getDescription() {
         return description;
@@ -22,11 +32,8 @@ public class Category implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    private String description;
+    
 
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "category")
-    @JsonIgnoreProperties("category")
-    private List<Audience> audiences;
 
     public Integer getId() {
         return id;

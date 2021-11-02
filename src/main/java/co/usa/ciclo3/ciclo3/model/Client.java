@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -22,7 +24,23 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "client")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class Client implements Serializable {
+    
+       @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idClient;
+    private String email;
+    private String password;
+    private String name;
+    private Integer age;
+    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
+    @JsonIgnoreProperties("client")
+    public List<Message>messages;
+
+    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
+    @JsonIgnoreProperties("client")
+    public List<Reservations>reservations;
 
     public Integer getIdClient() {
         return idClient;
@@ -79,19 +97,4 @@ public class Client implements Serializable {
     public void setReservations(List<Reservations> reservations) {
         this.reservations = reservations;
     }
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idClient;
-    private String email;
-    private String password;
-    private String name;
-    private Integer age;
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
-    @JsonIgnoreProperties("client")
-    public List<Message>messages;
-
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
-    @JsonIgnoreProperties("client")
-    public List<Reservations>reservations;
 }

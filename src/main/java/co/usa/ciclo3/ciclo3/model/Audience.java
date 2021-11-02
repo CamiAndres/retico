@@ -5,32 +5,39 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
+/*
+Autor: Grupo 4
+*/
+//Creación de la entidad 
 @Entity
 @Table(name="audience")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class Audience implements Serializable {
+    //Creación del Id autoincremental
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+    //Atributos de Audience
     private Integer id;
     private String name;
     private String owner;
     private Integer capacity;
     private String description;
-   
+   //Creación de la relación con Category
     @ManyToOne
     @JoinColumn(name="idcategory")
     @JsonIgnoreProperties("audiences")
     private Category category;
-
+ //Creación de la relación con Message
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "audience")
     @JsonIgnoreProperties({"audience", "client"})
     private List<Message> messages;
-
+ //Creación de la relación con Reservation
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "audience")
     @JsonIgnoreProperties({"audience", "client"})
     private List<Reservations> reservations;
-
+// metodos getter and setter
     public List<Message> getMessages() {
         return messages;
     }

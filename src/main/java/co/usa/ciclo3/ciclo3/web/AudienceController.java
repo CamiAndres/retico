@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/Audience")
-//@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class AudienceController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class AudienceController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean deleteAudience(@PathVariable("id") int id){
-        return audienceService.deleteCategory(id);
+        return audienceService.deleteAudience(id);
     }
 
 

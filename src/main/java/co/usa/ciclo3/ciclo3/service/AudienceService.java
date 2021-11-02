@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Service
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class AudienceService {
 
     @Autowired
@@ -45,6 +48,10 @@ public class AudienceService {
                 if(c.getDescription()!=null){
                     g.get().setDescription(c.getDescription());
                 }
+                if(c.getOwner()!=null){
+                    g.get().setOwner(c.getOwner());
+                }
+
 
                 if(c.getCapacity()!=null){
                     g.get().setCapacity(c.getCapacity());
@@ -56,7 +63,7 @@ public class AudienceService {
 
     }
 
-    public boolean deleteCategory(int id){
+    public boolean deleteAudience(int id){
         Optional<Audience> c=getAudience(id);
         if(!c.isEmpty()){
             audienceRepository.delete(c.get());
