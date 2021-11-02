@@ -14,21 +14,22 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author lenovo
+ * @autor: Camilo morales
  */
 @Service
 public class ReservationsService {
     @Autowired
     private ReservationsRepository metodosCrud;
 
+   // Creación de la lista Reservations
     public List<Reservations> getAll(){
         return metodosCrud.getAll();
     }
-
+// Optional de Reservations que permite trabajar con nulls
     public Optional<Reservations> getReservation(int reservationId) {
         return metodosCrud.getReservation(reservationId);
     }
-
+// Metodo guardar dada una reservación
     public Reservations save(Reservations reservation){
         if(reservation.getIdReservation()==null){
             return metodosCrud.save(reservation);
@@ -41,7 +42,7 @@ public class ReservationsService {
             }
         }
     }
-
+// Metodo actualizar dada una reservación 
     public Reservations update(Reservations reservation){
         if(reservation.getIdReservation()!=null){
             Optional<Reservations> e= metodosCrud.getReservation(reservation.getIdReservation());
@@ -65,7 +66,7 @@ public class ReservationsService {
             return reservation;
         }
     }
-
+// Metodo que borra una reservación dado el ID
     public boolean deleteReservation(int reservationId) {
         Boolean aBoolean = getReservation(reservationId).map(reservation -> {
             metodosCrud.delete(reservation);

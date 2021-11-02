@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Entity
 @Table(name="category")
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
