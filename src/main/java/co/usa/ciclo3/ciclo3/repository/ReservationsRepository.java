@@ -5,8 +5,12 @@
  */
 package co.usa.ciclo3.ciclo3.repository;
 
+import co.usa.ciclo3.ciclo3.Reports.CountClient;
+import co.usa.ciclo3.ciclo3.model.Client;
 import co.usa.ciclo3.ciclo3.model.Reservations;
 import co.usa.ciclo3.ciclo3.repository.crud.ReservationsCrudRepository;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +37,21 @@ public class ReservationsRepository {
     public void delete(Reservations reservation){
         crud4.delete(reservation);
     }
-    
+    public List<Reservations> ReservationStatus (String status){
+         return crud4.findAllByStatus(status);
+     }
+     
+     public List<Reservations> ReservationTime (Date a, Date b){
+         return crud4.findAllByStartDateAfterAndStartDateBefore(a, b);
+     }
+   
+     public List<CountClient> getTopClient(){
+         List<CountClient> res=new ArrayList<>();
+         List<Object[]>report = crud4.countTotalReservationsByClient();
+         for(int i=0; i<report.size();i++){
+             res.add(new CountClient((Long)report.get(i)[1],(Client) report.get(i)[0]));
+         
+         }
+         return res;
+     }
 }
